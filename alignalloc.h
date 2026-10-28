@@ -9,12 +9,37 @@
 
 // https://stackoverflow.com/questions/12942548/making-stdvector-allocate-aligned-memory
 namespace detail {
-    void* allocate_aligned_memory(size_t align, size_t size) {
-        return std::aligned_alloc(align, size);
+    #ifdef _WIN32
+        void* allocate_aligned_memory(size_t align, size_t size) {
+            return _aligned_malloc(size, align);
+        }
+        void deallocate_aligned_memory(void* ptr) noexcept {
+            _aligned_free(ptr);
+        }
+    #else
+        void* allocate_aligned_memory(size_t align, size_t size) {
+            return std::aligned_alloc(align, size);
+        }
+        void deallocate_aligned_memory(void* ptr) noexcept {
+            std::free(ptr);
     }
-    void deallocate_aligned_memory(void* ptr) noexcept {
-        std::free(ptr);
+    #endif
+    /*#include <cstdlib>
+#ifdef _WIN32
+    inline void* aligned_alloc_wrapper(size_t align, size_t sz) {
+        return _aligned_malloc(sz, align);
     }
+    inline void aligned_free_wrapper(void* p) {
+        _aligned_free(p);
+    }
+#else
+    inline void* aligned_alloc_wrapper(size_t align, size_t sz) {
+        return aligned_alloc(align, sz);
+    }
+    inline void aligned_free_wrapper(void* p) {
+        free(p);
+    }
+#endif*/
 }
 
 template <typename T, size_t Align = 64>

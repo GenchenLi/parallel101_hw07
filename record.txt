@@ -1,0 +1,227 @@
+原始结果：
+.\build\main.exe
+t=0: n=1120
+matrix_randomize: 0.0091412s
+matrix_randomize: 0.0083133s
+matrix_transpose: 0.0201856s
+matrix_multiply: 14.7639s
+matrix_multiply: 16.4526s
+matrix_RtAR: 31.2376s    
+matrix_trace: 0.0001815s
+1.75932e+08
+test_func: 31.2936s
+t=1: n=928
+matrix_randomize: 0.0082197s
+matrix_randomize: 0.0060169s
+matrix_transpose: 0.0139055s
+matrix_multiply: 12.244s
+matrix_multiply: 11.1318s
+matrix_RtAR: 23.3907s
+matrix_trace: 0.0002369s
+1.00156e+08
+test_func: 23.4295s
+t=2: n=1024
+matrix_randomize: 0.0073764s
+matrix_randomize: 0.0114779s
+matrix_transpose: 0.0207168s
+matrix_multiply: 13.8947s
+matrix_multiply: 13.4851s
+matrix_RtAR: 27.402s
+matrix_trace: 0.0002574s
+1.34324e+08
+t=3: n=1056
+matrix_randomize: 0.0088152s
+matrix_randomize: 0.0105948s
+matrix_transpose: 0.0198732s
+matrix_multiply: 14.739s
+matrix_multiply: 17.456s
+matrix_RtAR: 32.2172s
+matrix_trace: 0.0003248s
+1.47405e+08
+test_func: 32.2713s
+overall: 114.533s
+PS D:\git_repo\parallel-course\hw07> .\build\main.exe
+t=0: n=1120
+matrix_randomize: 0.0126021s
+matrix_randomize: 0.0129345s
+matrix_transpose: 0.0194221s
+matrix_multiply: 14.0538s
+matrix_multiply: 13.9808s
+matrix_RtAR: 28.055s
+matrix_trace: 0.0006046s
+1.75932e+08
+test_func: 28.119s
+t=1: n=928
+matrix_randomize: 0.0096459s
+matrix_randomize: 0.0079483s
+matrix_transpose: 0.0178396s
+matrix_multiply: 8.1294s
+matrix_multiply: 10.523s
+matrix_RtAR: 18.6711s
+matrix_trace: 0.0001176s
+1.00156e+08
+test_func: 18.7159s
+t=2: n=1024
+matrix_randomize: 0.0118498s
+matrix_randomize: 0.0128639s
+matrix_transpose: 0.0268123s
+matrix_multiply: 12.8442s
+matrix_multiply: 14.0809s
+matrix_RtAR: 26.9529s
+matrix_trace: 0.0001915s
+1.34324e+08
+test_func: 27.0141s
+t=3: n=1056
+matrix_randomize: 0.0127061s
+matrix_randomize: 0.0143872s
+matrix_transpose: 0.0260447s
+matrix_multiply: 15.9441s
+matrix_multiply: 15.1861s
+matrix_RtAR: 31.1574s
+matrix_trace: 0.0001208s
+1.47405e+08
+test_func: 31.2244s
+overall: 105.162s
+
+修改1：matrix_randomize只分配外层for循环给openomp，区别不大
+t=0: n=1120
+matrix_randomize: 0.0091412s
+matrix_randomize: 0.0083133s
+matrix_transpose: 0.0201856s
+matrix_multiply: 14.7639s
+matrix_multiply: 16.4526s
+matrix_RtAR: 31.2376s    
+matrix_trace: 0.0001815s
+1.75932e+08
+test_func: 31.2936s
+t=1: n=928
+matrix_randomize: 0.0082197s
+matrix_randomize: 0.0060169s
+matrix_transpose: 0.0139055s
+matrix_multiply: 12.244s
+matrix_multiply: 11.1318s
+matrix_RtAR: 23.3907s
+matrix_trace: 0.0002369s
+1.00156e+08
+test_func: 23.4295s
+t=2: n=1024
+matrix_randomize: 0.0073764s
+matrix_randomize: 0.0114779s
+matrix_transpose: 0.0207168s
+matrix_multiply: 13.8947s
+matrix_multiply: 13.4851s
+matrix_RtAR: 27.402s
+matrix_trace: 0.0002574s
+1.34324e+08
+test_func: 27.4573s
+t=3: n=1056
+matrix_randomize: 0.0088152s
+matrix_randomize: 0.0105948s
+matrix_transpose: 0.0198732s
+matrix_multiply: 14.739s
+matrix_multiply: 17.456s
+matrix_RtAR: 32.2172s
+matrix_trace: 0.0003248s
+1.47405e+08
+test_func: 32.2713s
+overall: 114.533s
+
+// 修改2：在1的基础上，将transpose函数分块循环，x和y都为256的结果
+t=0: n=1120
+matrix_randomize: 0.0108172s
+matrix_randomize: 0.0088183s
+matrix_transpose: 0.0694586s
+PS D:\git_repo\parallel-course\hw07> .\build\main.exe
+t=0: n=1120
+matrix_randomize: 0.0102481s
+matrix_randomize: 0.0092748s
+matrix_transpose: 0.0671833s
+matrix_multiply: 13.4237s
+matrix_multiply: 13.487s
+matrix_RtAR: 26.9791s
+matrix_trace: 0.0002808s
+1.75932e+08
+test_func: 27.0378s
+t=1: n=928
+matrix_randomize: 0.0177292s
+matrix_randomize: 0.0113873s
+matrix_transpose: 0.0426585s
+matrix_multiply: 7.80618s
+matrix_multiply: 8.24458s
+matrix_RtAR: 16.0947s
+matrix_trace: 0.0001647s
+1.00156e+08
+test_func: 16.1549s
+t=2: n=1024
+matrix_randomize: 0.0153292s
+matrix_randomize: 0.0122013s
+matrix_transpose: 0.0459271s
+matrix_multiply: 11.0487s
+matrix_multiply: 11.8667s
+matrix_RtAR: 22.9622s
+matrix_trace: 0.0005509s
+1.34324e+08
+test_func: 23.0287s
+t=3: n=1056
+matrix_randomize: 0.0163352s
+matrix_randomize: 0.0135254s
+matrix_transpose: 0.051224s
+matrix_multiply: 13.0127s
+matrix_multiply: 12.783s
+matrix_RtAR: 25.848s
+matrix_trace: 0.0003543s
+1.47405e+08
+test_func: 25.9252s
+overall: 92.2307s
+
+*/
+
+//在2的基础上，将乘函数，修改为寄存器分块版本（）
+t=0: n=1120
+matrix_randomize: 0.0108105s
+matrix_randomize: 0.0102754s
+matrix_transpose: 0.0462608s
+matrix_multiply: 78.1772s
+PS D:\git_repo\parallel-course\hw07> .\build\main.exe    
+t=0: n=1120
+matrix_randomize: 0.0104795s
+matrix_randomize: 0.0092717s
+matrix_transpose: 0.0478305s
+matrix_multiply: 12.273s
+matrix_multiply: 12.2724s
+matrix_RtAR: 24.5943s
+matrix_trace: 0.0003625s
+1.75932e+08
+test_func: 24.6509s
+t=1: n=928
+matrix_randomize: 0.0083686s
+matrix_randomize: 0.009191s
+matrix_transpose: 0.046794s
+matrix_multiply: 7.03927s
+matrix_multiply: 7.3616s
+matrix_RtAR: 14.4488s
+matrix_trace: 0.0003838s
+1.00156e+08
+test_func: 14.4943s
+t=2: n=1024
+matrix_randomize: 0.011688s
+matrix_randomize: 0.0105343s
+matrix_transpose: 0.0420184s
+matrix_multiply: 9.98634s
+matrix_multiply: 10.2637s
+matrix_RtAR: 20.2931s
+matrix_trace: 0.0002936s
+1.34324e+08
+test_func: 20.346s
+t=3: n=1056
+matrix_randomize: 0.0094868s
+matrix_randomize: 0.021063s
+matrix_transpose: 0.0519796s
+matrix_multiply: 10.8746s
+matrix_multiply: 12.1451s
+matrix_RtAR: 23.0725s
+matrix_trace: 0.000126s
+1.47405e+08
+test_func: 23.1392s
+overall: 82.7056s
+

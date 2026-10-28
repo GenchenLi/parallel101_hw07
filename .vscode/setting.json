@@ -1,0 +1,15 @@
+{
+    // ✅ 打开文件夹时自动检测CMakeLists并自动configure（就是你要的功能）
+    "cmake.configureOnOpen": true,
+    // 构建目录，推荐放到 build 下面，不污染源码
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    // 自动保存CMake缓存变化
+    "cmake.autoRestartBuild": true,
+    // 保存CMakeLists.txt时自动重新configure
+    "cmake.configureOnEdit": true,
+    // 自动激活预设（如果你用CMakePresets.json）
+    "cmake.autoSelectConfigurePreset": true,
+    // C/C++插件读取cmake生成的compile_commands.json，补全、跳转
+    "C_Cpp.default.compileCommands": "${workspaceFolder}/build/compile_commands.json",
+    "C_Cpp.intelliSenseEngine": "default"
+}
